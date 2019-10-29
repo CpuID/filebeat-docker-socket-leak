@@ -1,0 +1,25 @@
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      cleanup_timeout: 30s 
+      templates:
+        - condition:
+            regexp:
+              docker.container.name: ".*"
+          config:
+            - type: docker
+              containers.ids:
+                - "${data.docker.container.id}"
+              processors:
+                - add_docker_metadata: ~
+                - decode_json_fields:
+                    fields: ["message"]
+                    target: "message_json"
+
+output:
+  redis:
+    hosts: ["redis:6379"]
+    key: "logstash"
+    datatype: "list"
+    timeout: 5
+    reconnect_interval: 1

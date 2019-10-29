@@ -8,7 +8,7 @@ It seems to be roughly 2~ file handles per container started, so if you set `nof
 
 # Reproducing
 
-Run:
+You will need a Docker daemon available/installed (tested on Linux). Then run:
 
 ```
 ./test.sh

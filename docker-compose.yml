@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  filebeat:
+  filebeat6:
     image: docker.elastic.co/beats/filebeat:6.8.3
     command: filebeat -e -strict.perms=false
     user: root
@@ -10,10 +10,24 @@ services:
         soft: 1024
         hard: 4096
     volumes:
-      - "./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "./filebeat-6.x.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  filebeat7:
+    image: docker.elastic.co/beats/filebeat:7.4.1
+    command: filebeat -e -strict.perms=false
+    user: root
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 4096
+    volumes:
+      - "./filebeat-7.x.yml:/usr/share/filebeat/filebeat.yml:ro"
       - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
   redis:
     image: redis:5.0.6
     mem_limit: 512m
     mem_reservation: 256m
+    ports:
+      - "6379:6379"

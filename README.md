@@ -11,8 +11,16 @@ It seems to be roughly 2~ file handles per container started, so if you set `nof
 You will need a Docker daemon available/installed (tested on Linux). Then run:
 
 ```
-./test.sh
+./test.sh 6
 ```
+
+which will test on Filebeat 6.x (using the `docker` input). Or:
+
+```
+./test.sh 7
+```
+
+which will test on Filebeat 7.x (using the `container` input).
 
 # Example output
 
